@@ -1,0 +1,8 @@
+[group]
+x.x.x.x
+y.y.y.y
+
+[group:vars]
+ansible_ssh_user = <user-name>
+ansible_ssh_pass = <user-password>
+ansible_become_password = <sudo-password>
