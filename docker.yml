@@ -1,18 +1,20 @@
 ---
+
 - name: Prepare VMs for Docker installation
   hosts: virt
+  become: yes
   tasks:
 
-#  - name: Remove old versions of Docker
-#    apt:
-#      name:
-#      - docker.io
-#      - docker-doc
-#      - docker-compose
-#      - podman-docker
-#      - containerd
-#      - runc
-#      state: absent
+  - name: Remove old versions of Docker
+    apt:
+      name:
+      - docker.io
+      - docker-doc
+      - docker-compose
+      - podman-docker
+      - containerd
+      - runc
+      state: absent
 
   - name: Check if needed packages are installed
     apt:
@@ -35,18 +37,18 @@
 
 - name: Install Docker to VMs
   hosts: virt
+  become: yes
   tasks:
 
   - name: Download official GPG key
-    command: >
-      curl -fsSL https://download.docker.com/linux/debian/gpg
-      -o /etc/apt/keyrings/docker.asc
-#    register: dockerkey
+    command: curl -fsSL https://download.docker.com/linux/debian/gpg
+    register: curl_output
+    changed_when: curl_output.rc != 0
 
-#  - name: Save Docker GPG key to file
-#    copy:
-#      dest: /etc/apt/keyrings/docker.asc
-#      content: "{{ dockerkey.stdout_lines }}"
+  - name: Save Docker GPG key to file
+    copy:
+      dest: /etc/apt/keyrings/docker.asc
+      content: "{{ curl_output.stdout }}"
 
   - name: Add apt repository
     copy:
@@ -66,8 +68,8 @@
       - docker-compose-plugin
       state: latest
 
-#  - name: Add user to docker group
-#    user:
-#      name:
-#      group: docker
-#      append: yes
+  - name: Add user to docker group
+    user:
+      name: "{{ ansible_ssh_user }}"
+      groups: docker
+      append: yes
