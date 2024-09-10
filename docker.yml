@@ -1,0 +1,73 @@
+---
+- name: Prepare VMs for Docker installation
+  hosts: virt
+  tasks:
+
+#  - name: Remove old versions of Docker
+#    apt:
+#      name:
+#      - docker.io
+#      - docker-doc
+#      - docker-compose
+#      - podman-docker
+#      - containerd
+#      - runc
+#      state: absent
+
+  - name: Check if needed packages are installed
+    apt:
+      name:
+      - ca-certificates
+      - curl
+      state: present
+
+  - name: Set permissions for keyrings directory
+    file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: '0755'
+
+  - name: Create file for Docker GPG key
+    file:
+      path: /etc/apt/keyrings/docker.asc
+      state: touch
+      mode: a+r
+
+- name: Install Docker to VMs
+  hosts: virt
+  tasks:
+
+  - name: Download official GPG key
+    command: >
+      curl -fsSL https://download.docker.com/linux/debian/gpg
+      -o /etc/apt/keyrings/docker.asc
+#    register: dockerkey
+
+#  - name: Save Docker GPG key to file
+#    copy:
+#      dest: /etc/apt/keyrings/docker.asc
+#      content: "{{ dockerkey.stdout_lines }}"
+
+  - name: Add apt repository
+    copy:
+      dest: /etc/apt/sources.list.d/docker.list
+      content: >
+        deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
+        https://download.docker.com/linux/debian bookworm stable
+
+  - name: Install Docker packages
+    apt:
+      update_cache: yes
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      state: latest
+
+#  - name: Add user to docker group
+#    user:
+#      name:
+#      group: docker
+#      append: yes
