@@ -3,6 +3,7 @@
 - name: Prepare VMs for Docker installation
   hosts: virt
   become: yes
+  become_method: sudo
   tasks:
 
   - name: Remove old versions of Docker
@@ -38,6 +39,7 @@
 - name: Install Docker to VMs
   hosts: virt
   become: yes
+  become_method: sudo
   tasks:
 
   - name: Download official GPG key
@@ -68,8 +70,8 @@
       - docker-compose-plugin
       state: latest
 
-  - name: Add user to docker group
-    user:
-      name: "{{ ansible_ssh_user }}"
-      groups: docker
-      append: yes
+#  - name: Add user to docker group
+#    user:
+#      name: "{{ ansible_user }}"
+#      groups: docker
+#      append: yes
