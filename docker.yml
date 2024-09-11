@@ -70,8 +70,9 @@
       - docker-compose-plugin
       state: latest
 
-#  - name: Add user to docker group
-#    user:
-#      name: "{{ ansible_user }}"
-#      groups: docker
-#      append: yes
+  - name: Add user to docker group
+    user:
+      name: "{{ docker_user }}"
+      groups: docker
+      append: yes
+    when: docker_user is defined and docker_user != ""

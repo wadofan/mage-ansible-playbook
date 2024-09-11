@@ -1,6 +1,6 @@
 [group]
-x.x.x.x
-y.y.y.y
+x.x.x.x docker_user=<user1> variable2=<value>
+y.y.y.y docker_user=<user2>
 
 [group:vars]
 ansible_user = <user-name>
