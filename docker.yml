@@ -2,77 +2,81 @@
 
 - name: Prepare VMs for Docker installation
   hosts: virt
-  become: yes
+  become: true
   become_method: sudo
-  tasks:
+  pre_tasks:
 
-  - name: Remove old versions of Docker
-    apt:
-      name:
-      - docker.io
-      - docker-doc
-      - docker-compose
-      - podman-docker
-      - containerd
-      - runc
-      state: absent
+    - name: Remove old versions of Docker
+      apt:
+        name:
+          - docker.io
+          - docker-doc
+          - docker-compose
+          - podman-docker
+          - containerd
+          - runc
+        state: absent
 
-  - name: Check if needed packages are installed
-    apt:
-      name:
-      - ca-certificates
-      - curl
-      state: present
+    - name: Check if needed packages are installed
+      apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
 
-  - name: Set permissions for keyrings directory
-    file:
-      path: /etc/apt/keyrings
-      state: directory
-      mode: '0755'
+    - name: Set permissions for keyrings directory
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
 
-  - name: Create file for Docker GPG key
-    file:
-      path: /etc/apt/keyrings/docker.asc
-      state: touch
-      mode: a+r
+    - name: Create file for Docker GPG key
+      file:
+        path: /etc/apt/keyrings/docker.asc
+        state: touch
+        mode: a+r
 
 - name: Install Docker to VMs
   hosts: virt
-  become: yes
+  become: true
   become_method: sudo
   tasks:
 
-  - name: Download official GPG key
-    command: curl -fsSL https://download.docker.com/linux/debian/gpg
-    register: curl_output
-    changed_when: curl_output.rc != 0
+    - name: Download official GPG key
+      uri:
+        url: https://download.docker.com/linux/debian/gpg
+        return_content: true
+      register: gpgkey
+      failed_when: "'BEGIN PGP PUBLIC KEY BLOCK' not in gpgkey.content"
 
-  - name: Save Docker GPG key to file
-    copy:
-      dest: /etc/apt/keyrings/docker.asc
-      content: "{{ curl_output.stdout }}"
+    - name: Save Docker GPG key to file
+      copy:
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+        content: "{{ gpgkey.content }}"
 
-  - name: Add apt repository
-    copy:
-      dest: /etc/apt/sources.list.d/docker.list
-      content: >
-        deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
-        https://download.docker.com/linux/debian bookworm stable
+    - name: Add apt repository
+      copy:
+        dest: /etc/apt/sources.list.d/docker.list
+        mode: '0644'
+        content: >
+          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
+          https://download.docker.com/linux/debian bookworm stable
 
-  - name: Install Docker packages
-    apt:
-      update_cache: yes
-      name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-      state: latest
+    - name: Install Docker packages
+      apt:
+        update_cache: true
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
 
-  - name: Add user to docker group
-    user:
-      name: "{{ docker_user }}"
-      groups: docker
-      append: yes
-    when: docker_user is defined and docker_user != ""
+    - name: Add user to docker group
+      user:
+        name: "{{ docker_user }}"
+        groups: docker
+        append: true
+      when: docker_user is defined and docker_user != ""
