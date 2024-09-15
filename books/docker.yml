@@ -47,7 +47,7 @@
         url: https://download.docker.com/linux/debian/gpg
         return_content: true
       register: gpgkey
-      failed_when: "'BEGIN PGP PUBLIC KEY BLOCK' not in gpgkey.content"
+      failed_when: '"BEGIN PGP PUBLIC KEY BLOCK" not in gpgkey.content'
 
     - name: Save Docker GPG key to file
       ansible.builtin.copy:

@@ -1,0 +1,64 @@
+---
+
+- name: Check if needed tools are installed
+  hosts: virt
+  become: true
+  become_method: ansible.builtin.sudo
+  pre_tasks:
+
+    - name: Check on Debian-based machines
+      ansible.builtin.apt:
+        name:
+          - git
+          - openssh-client
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+- name: Download project from GitHub
+  hosts: virt
+  vars:
+    keyfile_path: "~/.ssh/github"
+    project_dir: "~/mage-docker"
+    project_repo: "git@github.com:wadofan/mage-docker.git"
+    scific_repo: "https://github.com/scific-conference/scific.git"
+  become: true
+  become_user: "{{ docker_user }}"
+  become_method: ansible.builtin.su
+  tasks:
+
+    - name: Check if SSH key exist
+      ansible.builtin.stat:
+        path: "{{ keyfile_path }}"
+      register: sshkey
+
+    - name: Copy SSH key for GitHub (if not exist)
+      ansible.builtin.copy:
+        src: ../keys/github
+        dest: "{{ keyfile_path }}"
+        mode: '0600'
+      when: not sshkey.stat.exists
+
+    - name: Clone repository from GitHub
+      ansible.builtin.git:
+        key_file: "{{ keyfile_path }}"
+        accept_hostkey: true
+        repo: "{{ project_repo }}"
+        dest: "{{ project_dir }}"
+        version: main
+        single_branch: true
+
+    - name: Clone SCIFiC repository
+      ansible.builtin.git:
+        repo: "{{ scific_repo }}"
+        dest: "{{ project_dir }}/scific"
+        single_branch: true
+
+# - name: Start project
+#   hosts: virt
+#   become: true
+#   become_user: "{{ docker_user }}"
+#   become_method: ansible.builtin.su
+#   tasks:
+
+#     - name: Run docker compose to start project
+#       community.docker.docker_compose_v2:
