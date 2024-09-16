@@ -6,7 +6,7 @@
   become_method: ansible.builtin.sudo
   pre_tasks:
 
-    - name: Check on Debian-based machines
+    - name: When OS is from Debian family
       ansible.builtin.apt:
         name:
           - git
@@ -51,6 +51,7 @@
       ansible.builtin.git:
         repo: "{{ scific_repo }}"
         dest: "{{ project_dir }}/scific"
+        version: main
         single_branch: true
 
 # - name: Start project
