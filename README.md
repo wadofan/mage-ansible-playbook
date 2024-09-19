@@ -28,6 +28,12 @@
 указав при вызове команды путь до них, или воспользоваться файлом `playbook.yml`, в котором 
 они подключены и должны, по идее, выполняться как запланировано по очереди.
 
+Для запуска проекта в конце плейбука `scific.yml` используется модуль [community.docker.docker_compose_v2](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html). Поэтому, если установлена базовая комплектация Ansible (`ansible-core`), сначала этот модуль нужно скачать из Ansible Galaxy, используя команду:
+
+```console
+$ ansible-galaxy collection install community.docker
+```
+
 ## Как использовать
 
 Изменить `/etc/ansible/hosts` или какой-нибудь другой файл инвентаря (локальным инвентарем 
