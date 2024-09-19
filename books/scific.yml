@@ -54,12 +54,18 @@
         version: main
         single_branch: true
 
-# - name: Start project
-#   hosts: virt
-#   become: true
-#   become_user: "{{ docker_user }}"
-#   become_method: ansible.builtin.su
-#   tasks:
+- name: Start project
+  hosts: virt
+  vars:
+    project_dir: "~/mage-docker"
+  become: true
+  become_user: "{{ docker_user }}"
+  become_method: ansible.builtin.su
+  tasks:
 
-#     - name: Run docker compose to start project
-#       community.docker.docker_compose_v2:
+    - name: Run docker compose to start project
+      community.docker.docker_compose_v2:
+        state: present
+        project_src: "{{ project_dir }}"
+        build: always
+        pull: missing
