@@ -1,9 +1,7 @@
-[group]
-x.x.x.x docker_user=<user1> variable2=<value>
-y.y.y.y docker_user=<user2>
+[docker]
+x.x.x.x ansible_user=<user1> ansible_pass=<password1>
+y.y.y.y ansible_user=<user2> ansible_pass=<password2>
 
-[group:vars]
-ansible_user = <user-name>
-ansible_pass = <user-password>
+[docker:vars]
 ansible_ssh_private_key_file = /private/key/path
 ansible_become_password = <sudo-password>
