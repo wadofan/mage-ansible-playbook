@@ -28,6 +28,14 @@
         state: present
       when: ansible_facts['os_family'] == "Alpine"
 
+    - name: When OS is from SUSE family
+      community.general.zypper:
+        name:
+          - git-core
+          - openssh
+        state: present
+      when: ansible_facts['os_family'] == "Suse"
+
     - name: When OS is is based on Arch
       community.general.pacman:
         name:
@@ -43,6 +51,15 @@
           - net-misc/openssh
         state: present
       when: ansible_facts['os_family'] == "Gentoo"
+
+    # - name: When OS is based on Mandrake
+    #   when: ansible_facts['os_family'] == "Mandrake"
+
+    # - name: When OS is Solaris
+    #   when: ansible_facts['os_family'] == "Solaris"
+
+    # - name: When OS is FreeBSD
+    #   when: ansible_facts['os_family'] == "FreeBSD"
 
 - name: Download and run project from GitHub
   hosts: all
