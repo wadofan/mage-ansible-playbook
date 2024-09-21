@@ -1,7 +1,7 @@
 ---
 
 - name: Check if needed tools are installed
-  hosts: virt
+  hosts: all
   become: true
   become_method: ansible.builtin.sudo
   pre_tasks:
@@ -14,16 +14,13 @@
         state: present
       when: ansible_facts['os_family'] == "Debian"
 
-- name: Download project from GitHub
-  hosts: virt
+- name: Download and run project from GitHub
+  hosts: all
   vars:
     keyfile_path: "~/.ssh/github"
     project_dir: "~/mage-docker"
     project_repo: "git@github.com:wadofan/mage-docker.git"
     scific_repo: "https://github.com/scific-conference/scific.git"
-  become: true
-  become_user: "{{ docker_user }}"
-  become_method: ansible.builtin.su
   tasks:
 
     - name: Check if SSH key exist
@@ -53,15 +50,6 @@
         dest: "{{ project_dir }}/scific"
         version: main
         single_branch: true
-
-- name: Start project
-  hosts: virt
-  vars:
-    project_dir: "~/mage-docker"
-  become: true
-  become_user: "{{ docker_user }}"
-  become_method: ansible.builtin.su
-  tasks:
 
     - name: Run docker compose to start project
       community.docker.docker_compose_v2:

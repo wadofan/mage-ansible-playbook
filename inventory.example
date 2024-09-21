@@ -1,7 +1,7 @@
-[docker]
-x.x.x.x ansible_user=<user1> ansible_pass=<password1>
-y.y.y.y ansible_user=<user2> ansible_pass=<password2>
+a.b.c.d ansible_user=<user> ansible_pass=<password>
+x.x.x.x ansible_user=<user1>
+y.y.y.y ansible_user=<user2> ansible_port=<ssh-port>
 
-[docker:vars]
+[all:vars]
 ansible_ssh_private_key_file = /private/key/path
 ansible_become_password = <sudo-password>
