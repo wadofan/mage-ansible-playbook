@@ -1,5 +1,5 @@
-a.b.c.d ansible_user=<user> ansible_pass=<password>
-x.x.x.x ansible_user=<user1>
+a.b.c.d ansible_user=<user> ansible_pass=<password> ssh_pkg=openssh-clien
+x.x.x.x ansible_user=<user1> git_pkg=git-core
 y.y.y.y ansible_user=<user2> ansible_port=<ssh-port>
 
 [all:vars]

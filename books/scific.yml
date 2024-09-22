@@ -6,84 +6,22 @@
   become_method: ansible.builtin.sudo
   pre_tasks:
 
-    - name: When OS is from Debian family
-      ansible.builtin.apt:
+    - name: Set git package name
+      set_fact: git_pkg="git"
+      when: git_pkg is undefined
+
+    - name: Set openssh package name
+      set_fact: ssh_pkg="openssh"
+      when: ssh_pkg is undefined
+    
+    - name: Ensure git and openssh are installed
+      ansible.builtin.package:
         name:
-          - git
-          - openssh-client
+          - "{{ git_pkg }}"
+          - "{{ ssh_pkg }}"
         state: present
-      when: ansible_facts['os_family'] == "Debian"
 
-    - name: When OS is from RedHat family (untested)
-      ansible.builtin.dnf:
-        name:
-          - git
-          - openssh
-        state: present
-      when: ansible_facts['os_family'] == "RedHat"
-
-    - name: When OS is Alpine Linux (untested)
-      community.general.apk:
-        name: git,openssh
-        state: present
-      when: ansible_facts['os_family'] == "Alpine"
-
-    - name: When OS is from SUSE family (untested)
-      community.general.zypper:
-        name:
-          - git-core
-          - openssh
-        state: present
-      when: ansible_facts['os_family'] == "Suse"
-
-    - name: When OS is is based on Arch (untested)
-      community.general.pacman:
-        name:
-          - git
-          - openssh
-        state: present
-      when: ansible_facts['os_family'] == "Archlinux"
-
-    - name: When OS is based on Gentoo (untested)
-      community.general.portage:
-        package:
-          - dev-vcs/git
-          - net-misc/openssh
-        state: present
-      when: ansible_facts['os_family'] == "Gentoo"
-
-    - name: When OS is FreeBSD (untested)
-      community.general.pkgng:
-        name:
-          - git
-          - openssh
-      when: ansible_facts['os_family'] == "FreeBSD"
-
-    - name: When OS is NetBSD (untested)
-      community.general.pkgin:
-        name: git,openssh
-        # devel/git
-        # (https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/devel/git/index.html)
-        # security/openssh
-        # (https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/security/openssh/index.html)
-        state: present
-      when: ansible_facts['os_family'] in "NetBSD"
-
-    - name: When OS is OpenBSD (untested)
-      community.general.openbsd_pkg:
-        name:
-          - git # devel/git (https://openbsd.app/path/devel/git)
-          # openssh (https://www.openssh.com/openbsd.html)
-        state: present
-      when: ansible_facts['os_family'] == "OpenBSD"
-
-    # - name: When OS is based on Mandrake (untested)
-    #   when: ansible_facts['os_family'] == "Mandrake"
-
-    # - name: When OS is Solaris (untested)
-    #   when: ansible_facts['os_family'] == "Solaris"
-
-- name: Download project from GitHub # and run
+- name: Download project from GitHub
   hosts: all
   vars:
     keyfile_path: "~/.ssh/github"
@@ -119,10 +57,3 @@
         dest: "{{ project_dir }}/scific"
         version: main
         single_branch: true
-
-    # - name: Run docker compose to start project
-    #   community.docker.docker_compose_v2:
-    #     state: present
-    #     project_src: "{{ project_dir }}"
-    #     build: always
-    #     pull: missing
