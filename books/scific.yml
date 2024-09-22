@@ -14,7 +14,7 @@
         state: present
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: When OS is from RedHat family
+    - name: When OS is from RedHat family (untested)
       ansible.builtin.dnf:
         name:
           - git
@@ -22,13 +22,13 @@
         state: present
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: When OS is Alpine Linux
+    - name: When OS is Alpine Linux (untested)
       community.general.apk:
         name: git,openssh
         state: present
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: When OS is from SUSE family
+    - name: When OS is from SUSE family (untested)
       community.general.zypper:
         name:
           - git-core
@@ -36,7 +36,7 @@
         state: present
       when: ansible_facts['os_family'] == "Suse"
 
-    - name: When OS is is based on Arch
+    - name: When OS is is based on Arch (untested)
       community.general.pacman:
         name:
           - git
@@ -44,7 +44,7 @@
         state: present
       when: ansible_facts['os_family'] == "Archlinux"
 
-    - name: When OS is based on Gentoo
+    - name: When OS is based on Gentoo (untested)
       community.general.portage:
         package:
           - dev-vcs/git
@@ -52,14 +52,36 @@
         state: present
       when: ansible_facts['os_family'] == "Gentoo"
 
-    # - name: When OS is based on Mandrake
+    - name: When OS is FreeBSD (untested)
+      community.general.pkgng:
+        name:
+          - git
+          - openssh
+      when: ansible_facts['os_family'] == "FreeBSD"
+
+    - name: When OS is NetBSD (untested)
+      community.general.pkgin:
+        name: git,openssh
+        # devel/git
+        # (https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/devel/git/index.html)
+        # security/openssh
+        # (https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/security/openssh/index.html)
+        state: present
+      when: ansible_facts['os_family'] in "NetBSD"
+
+    - name: When OS is OpenBSD (untested)
+      community.general.openbsd_pkg:
+        name:
+          - git # devel/git (https://openbsd.app/path/devel/git)
+          # openssh (https://www.openssh.com/openbsd.html)
+        state: present
+      when: ansible_facts['os_family'] == "OpenBSD"
+
+    # - name: When OS is based on Mandrake (untested)
     #   when: ansible_facts['os_family'] == "Mandrake"
 
-    # - name: When OS is Solaris
+    # - name: When OS is Solaris (untested)
     #   when: ansible_facts['os_family'] == "Solaris"
-
-    # - name: When OS is FreeBSD
-    #   when: ansible_facts['os_family'] == "FreeBSD"
 
 - name: Download and run project from GitHub
   hosts: all
