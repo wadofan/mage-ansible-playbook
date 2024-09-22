@@ -83,7 +83,7 @@
     # - name: When OS is Solaris (untested)
     #   when: ansible_facts['os_family'] == "Solaris"
 
-- name: Download and run project from GitHub
+- name: Download project from GitHub # and run
   hosts: all
   vars:
     keyfile_path: "~/.ssh/github"
@@ -120,9 +120,9 @@
         version: main
         single_branch: true
 
-    - name: Run docker compose to start project
-      community.docker.docker_compose_v2:
-        state: present
-        project_src: "{{ project_dir }}"
-        build: always
-        pull: missing
+    # - name: Run docker compose to start project
+    #   community.docker.docker_compose_v2:
+    #     state: present
+    #     project_src: "{{ project_dir }}"
+    #     build: always
+    #     pull: missing
