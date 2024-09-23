@@ -6,19 +6,11 @@
   become_method: ansible.builtin.sudo
   pre_tasks:
 
-    - name: Set git package name
-      set_fact: git_pkg="git"
-      when: git_pkg is undefined
-
-    - name: Set openssh package name
-      set_fact: ssh_pkg="openssh"
-      when: ssh_pkg is undefined
-    
     - name: Ensure git and openssh are installed
       ansible.builtin.package:
         name:
-          - "{{ git_pkg }}"
-          - "{{ ssh_pkg }}"
+          - "{{ git_pkg | default('git') }}"
+          - "{{ ssh_pkg | default('openssh') }}"
         state: present
 
 - name: Download project from GitHub
