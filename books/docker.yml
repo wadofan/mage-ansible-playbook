@@ -74,7 +74,7 @@
           - docker-compose-plugin
         state: present
 
-- name: Manage Docker users
+- name: After installation routine
   hosts: all
   become: true
   become_method: ansible.builtin.sudo
@@ -88,3 +88,9 @@
         groups: docker
         append: true
       when: docker_user is defined and docker_user != ""
+
+    - name: Enable and start docker service
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
