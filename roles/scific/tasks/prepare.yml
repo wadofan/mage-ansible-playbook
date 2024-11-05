@@ -1,0 +1,23 @@
+- name: Make sure that needed packages are installed
+  become: true
+  ansible.builtin.package:
+    name:
+      - "{{ git_pkg | default('git') }}"
+      - "{{ ssh_pkg | default('openssh') }}"
+      - "{{ cron_pkg | default('cronie') }}"
+    state: present
+  notify: Enable cron service
+
+- name: Add user to docker group
+  become: true
+  ansible.builtin.user:
+    name: "{{ docker_user }}"
+    groups: docker
+    append: true
+  when: docker_user is defined
+
+- name: Copy SSH key for GitHub (if not exist)
+  ansible.builtin.copy:
+    src: "{{ local_keyfile }}"
+    dest: "{{ remote_keyfile }}"
+    mode: '0600'

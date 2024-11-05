@@ -1,0 +1,5 @@
+local_keyfile: "~/.ssh/github"
+remote_keyfile: "~/.ssh/github"
+project_dir: "~/mage-docker"
+project_repo: "git@github.com:wadofan/mage-docker.git"
+scific_repo: "https://github.com/scific-conference/scific.git"

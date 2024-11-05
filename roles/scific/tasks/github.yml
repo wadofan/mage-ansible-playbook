@@ -1,0 +1,16 @@
+- name: Clone repository from GitHub
+  ansible.builtin.git:
+    key_file: "{{ remote_keyfile }}"
+    accept_hostkey: true
+    repo: "{{ project_repo }}"
+    dest: "{{ project_dir }}"
+    version: main
+    single_branch: true
+
+- name: Clone SCIFiC repository
+  ansible.builtin.git:
+    repo: "{{ scific_repo }}"
+    dest: "{{ project_dir }}/scific"
+    version: main
+    single_branch: true
+  notify: Run Docker Compose

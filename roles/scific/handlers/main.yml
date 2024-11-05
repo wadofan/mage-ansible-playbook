@@ -1,0 +1,12 @@
+- name: Enable cron service
+  become: true
+  ansible.builtin.service:
+    name: "{{ cron_service | default('crond') }}"
+    state: started
+    enabled: true
+
+- name: Run Docker Compose
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_dir }}"
+    state: present
