@@ -1,5 +1,8 @@
+docker_user_name: mage
+docker_user_pass: changeme
+docker_user_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/mage.pub') }}"
 local_keyfile: "~/.ssh/github"
-remote_keyfile: "~/.ssh/github"
-project_dir: "~/mage-docker"
+remote_keyfile: "/home/{{ docker_user_name }}/.ssh/github"
+project_dir: "/home/{{ docker_user_name }}/mage-docker"
 project_repo: "git@github.com:wadofan/mage-docker.git"
 scific_repo: "https://github.com/scific-conference/scific.git"

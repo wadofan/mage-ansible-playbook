@@ -1,4 +1,16 @@
+- name: Copy SSH key to acces GitHub repositories
+  become: true
+  become_user: "{{ docker_user_name }}"
+  become_method: ansible.builtin.su
+  ansible.builtin.copy:
+    src: "{{ local_keyfile }}"
+    dest: "{{ remote_keyfile }}"
+    mode: '0600'
+
 - name: Clone repository from GitHub
+  become: true
+  become_user: "{{ docker_user_name }}"
+  become_method: ansible.builtin.su
   ansible.builtin.git:
     key_file: "{{ remote_keyfile }}"
     accept_hostkey: true
@@ -8,9 +20,19 @@
     single_branch: true
 
 - name: Clone SCIFiC repository
+  become: true
+  become_user: "{{ docker_user_name }}"
+  become_method: ansible.builtin.su
   ansible.builtin.git:
     repo: "{{ scific_repo }}"
     dest: "{{ project_dir }}/scific"
     version: main
     single_branch: true
   notify: Run Docker Compose
+
+# - name: Restart nginx to update certificates
+#   become: true
+#   become_user: "{{ docker_user_name }}"
+#   become_method: ansible.builtin.su
+#   ansible.builtin.command:
+#     cmd: docker exec mage-nginx-1 nginx -s reload

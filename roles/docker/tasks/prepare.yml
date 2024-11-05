@@ -1,4 +1,7 @@
 - name: Check if needed packages are installed
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.apt:
     name:
       - ca-certificates
@@ -7,12 +10,18 @@
     state: present
 
 - name: Set permissions for keyrings directory
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
     mode: '0755'
 
 - name: Touch file for GPG key
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.file:
     path: "{{ docker_keyfile }}"
     state: touch

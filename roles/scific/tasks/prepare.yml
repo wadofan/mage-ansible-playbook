@@ -1,23 +1,43 @@
 - name: Make sure that needed packages are installed
   become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.package:
     name:
       - "{{ git_pkg | default('git') }}"
       - "{{ ssh_pkg | default('openssh') }}"
-      - "{{ cron_pkg | default('cronie') }}"
+      - "{{ cron_pkg | default('cron') }}"
     state: present
   notify: Enable cron service
 
-- name: Add user to docker group
+- name: Create user to run docker project
   become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.user:
-    name: "{{ docker_user }}"
-    groups: docker
+    name: "{{ docker_user_name }}"
+    password: "{{ docker_user_pass | password_hash('sha512') }}"
+    comment: SCIFiC
+    groups: docker,sudo
     append: true
-  when: docker_user is defined
+    create_home: true
 
-- name: Copy SSH key for GitHub (if not exist)
-  ansible.builtin.copy:
-    src: "{{ local_keyfile }}"
-    dest: "{{ remote_keyfile }}"
-    mode: '0600'
+- name: Generate cron jobs file from template
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.template:
+    src: crontab
+    dest: /etc/cron.d/scific
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Add SSH key to access "{{ docker_user_name }}"
+  become: true
+  become_user: "{{ docker_user_name }}"
+  become_method: ansible.builtin.su
+  ansible.posix.authorized_key:
+    user: "{{ docker_user_name }}"
+    key: "{{ docker_user_key }}"
+    state: present

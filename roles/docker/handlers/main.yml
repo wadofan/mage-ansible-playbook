@@ -1,4 +1,7 @@
 - name: Enable docker service
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.service:
     name: docker
     state: started

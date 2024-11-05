@@ -1,6 +1,6 @@
 ---
 
-- name: Prepare system to download and run project 
+- name: Prepare system to download and run project
   ansible.builtin.include_tasks: prepare.yml
 
 - name: Download project from GitHub
