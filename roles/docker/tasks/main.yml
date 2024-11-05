@@ -1,0 +1,8 @@
+---
+
+- name: Prepare machine for Docker installation
+  ansible.builtin.include_tasks: prepare.yml
+
+- name: Install Docker (on Debian machines)
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_facts['distribution'] == "Debian"

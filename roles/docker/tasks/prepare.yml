@@ -1,0 +1,20 @@
+- name: Check if needed packages are installed
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - "{{ gpg_pkg | default('gpg') }}"
+    state: present
+
+- name: Set permissions for keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Touch file for GPG key
+  ansible.builtin.file:
+    path: "{{ docker_keyfile }}"
+    state: touch
+    mode: a+r
+  changed_when: false
