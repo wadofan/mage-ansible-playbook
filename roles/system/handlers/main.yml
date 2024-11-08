@@ -1,0 +1,10 @@
+- name: Restart SSH service
+  ansible.builtin.service:
+    name: "{{ ssh_service | default('sshd') }}"
+    state: started
+    enabled: true
+
+- name: Enable firewall
+  community.general.ufw:
+    state: enabled
+    logging: 'on'

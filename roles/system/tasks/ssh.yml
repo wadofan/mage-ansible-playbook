@@ -1,0 +1,5 @@
+- name: Copy configuration file for SSH
+  ansible.builtin.copy:
+    src: ssh.conf
+    dest: /etc/ssh/sshd_config
+  notify: Restart SSH service

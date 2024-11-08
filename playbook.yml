@@ -3,5 +3,6 @@
 - name: Set up new machines to run project
   hosts: all
   roles:
+    - system
     - docker
     - scific
