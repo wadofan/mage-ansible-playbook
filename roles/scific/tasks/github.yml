@@ -29,10 +29,3 @@
     version: main
     single_branch: true
   notify: Run Docker Compose
-
-# - name: Restart nginx to update certificates
-#   become: true
-#   become_user: "{{ docker_user_name }}"
-#   become_method: ansible.builtin.su
-#   ansible.builtin.command:
-#     cmd: docker exec mage-nginx-1 nginx -s reload

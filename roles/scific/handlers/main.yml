@@ -14,3 +14,14 @@
   community.docker.docker_compose_v2:
     project_src: "{{ project_dir }}"
     state: present
+  environment:
+    LETS_EMAIL: "{{ letsencrypt_email }}"
+    LETS_DOMAIN: "{{ letsencrypt_domain }}"
+  # notify: Restart nginx container
+
+# - name: Restart nginx container
+#   become: true
+#   become_user: "{{ docker_user_name }}"
+#   become_method: ansible.builtin.su
+#   ansible.builtin.command:
+#     cmd: docker exec mage-nginx nginx -s reload
