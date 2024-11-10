@@ -4,7 +4,3 @@
     state: started
     enabled: true
 
-- name: Enable firewall
-  community.general.ufw:
-    state: enabled
-    logging: 'on'

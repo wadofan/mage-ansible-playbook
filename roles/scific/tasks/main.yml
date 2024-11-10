@@ -6,6 +6,4 @@
 - name: Download project from GitHub
   ansible.builtin.include_tasks: github.yml
 
-- name: Use newly generated certificates
-  ansible.builtin.include_tasks: cert.yml
 

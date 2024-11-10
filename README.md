@@ -19,7 +19,7 @@ $ ansible-playbook ./playbook.yml
 плейбука необхідно встановити їх за допомогою команди:
 
 ```console
-$ ansible-galaxy collection install community.general community.docker
+$ ansible-galaxy collection install  ansible.posix community.general community.docker
 ```
 
 
@@ -63,7 +63,10 @@ $ ansible-galaxy collection install community.general community.docker
 Крім цього, для генерації SSL сертифікатів всередині 
 Docker-проекту використовуються додаткові дві змінні:
 - `letsencrypt_email`: email, на який буде зареєстрований сертифікат;
-- `letsencrypt_domain`: доменне ім'я, на яке буде виданий сертифікат.
+- `letsencrypt_domain`: доменне ім'я, на яке буде виданий сертифікат;
+- `nginx_container_name`: назва контейнера Nginx;
+- `cert_dir_path`: шлях до директорії, в якій знаходяться сертифікати, 
+сгенеровані за допомогою Certbot.
 
 
 ## Як можна задати ці параметри?

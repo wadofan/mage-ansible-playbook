@@ -1,0 +1,10 @@
+- name: Reload nginx configuration
+  community.docker.docker_container_exec:
+    name: "{{ nginx_container_name }}"
+    command: nginx -s reload
+
+- name: Enable firewall
+  community.general.ufw:
+    state: enabled
+    logging: 'on'
+

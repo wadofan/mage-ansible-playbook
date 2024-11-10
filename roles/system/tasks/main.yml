@@ -9,8 +9,6 @@
 - name: Configure SSH service
   ansible.builtin.include_tasks: ssh.yml
 
-# - name: Set up firewall
-#   ansible.builtin.include_tasks: firewall.yml
-
 # - name: Set up fail2ban
 #   ansible.builtin.include_tasks: fail2ban.yml
+

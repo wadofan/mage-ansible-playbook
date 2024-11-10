@@ -7,5 +7,4 @@ remote_keyfile: "/home/{{ docker_user_name }}/.ssh/github"
 project_dir: "/home/{{ docker_user_name }}/mage-docker"
 project_repo: "git@github.com:wadofan/mage-docker.git"
 scific_repo: "https://github.com/scific-conference/scific.git"
-letsencrypt_email: "user@change.me"
-letsencrypt_domain: "domain.change.me"
+

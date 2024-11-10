@@ -1,0 +1,11 @@
+---
+
+- name: Start project with Docker Compose
+  ansible.builtin.include_tasks: compose.yml
+
+- name: Set up SSL certificates
+  ansible.builtin.include_tasks: cert.yml
+
+- name: Set up firewall
+  ansible.builtin.include_tasks: firewall.yml
+

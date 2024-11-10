@@ -28,4 +28,4 @@
     dest: "{{ project_dir }}/webroot"
     version: main
     single_branch: true
-  notify: Run Docker Compose
+#  notify: Run Docker Compose

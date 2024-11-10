@@ -1,18 +1,19 @@
 - name: Deny incoming traffic by default
   community.general.ufw:
   default: deny
-  direction: in
+  direction: incoming
   protocol: any
 
-# - name: Deny outgoing traffic by default
-#   community.general.ufw:
-#   default: deny
-#   direction: incoming
-#   protocol: any
+- name: Deny outgoing traffic by default
+  community.general.ufw:
+  default: deny
+  direction: outgoing
+  protocol: any
 
 - name: Deny forwarded/routed traffic
   community.general.ufw:
     rule: deny
+    direction: any
     route: true
 
 - name: Limit incoming traffic on port 22 (ssh)
@@ -32,3 +33,4 @@
     - '80'
     - '443'
   notify: Enable firewall
+

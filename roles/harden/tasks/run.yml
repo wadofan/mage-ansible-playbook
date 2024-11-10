@@ -1,0 +1,11 @@
+- name: Run Docker Compose
+  become: true
+  become_user: "{{ docker_user_name }}"
+  become_method: ansible.builtin.su
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_dir }}"
+    state: present
+  environment:
+    LETS_EMAIL: "{{ letsencrypt_email }}"
+    LETS_DOMAIN: "{{ letsencrypt_domain }}"
+
