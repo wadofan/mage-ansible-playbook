@@ -1,6 +1,7 @@
-docker_user_name: mage
-docker_user_pass: changeme
+docker_user_name: "mage"
+docker_user_pass: "changeme"
 docker_user_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/mage.pub') }}"
+docker_user_shell: "/usr/bin/bash"
 local_keyfile: "~/.ssh/github"
 remote_keyfile: "/home/{{ docker_user_name }}/.ssh/github"
 project_dir: "/home/{{ docker_user_name }}/mage-docker"

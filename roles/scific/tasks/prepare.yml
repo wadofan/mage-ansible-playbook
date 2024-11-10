@@ -18,6 +18,7 @@
     name: "{{ docker_user_name }}"
     password: "{{ docker_user_pass | password_hash('sha512') }}"
     comment: SCIFiC
+    shell: "{{ docker_user_shell }}"
     groups: docker,sudo
     append: true
     create_home: true

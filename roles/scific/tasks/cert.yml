@@ -1,0 +1,14 @@
+- name: Copy created certificates to correct directory
+  become: true
+  become_method: ansible.builtin.sudo
+  ansible.builtin.copy:
+    src: "{{ project_dir }}/letsencrypt/conf/live/scific/*"
+    dest: "{{ project_dir }}/letsencrypt/conf/live/mage"
+    force: true
+    owner: root
+    group: root
+    mode: '0644'
+    follow: true
+    remote_src: true
+  notify: Reload nginx configuration
+
