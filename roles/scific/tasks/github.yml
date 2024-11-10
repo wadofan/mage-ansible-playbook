@@ -25,7 +25,7 @@
   become_method: ansible.builtin.su
   ansible.builtin.git:
     repo: "{{ scific_repo }}"
-    dest: "{{ project_dir }}/scific"
+    dest: "{{ project_dir }}/webroot"
     version: main
     single_branch: true
   notify: Run Docker Compose
