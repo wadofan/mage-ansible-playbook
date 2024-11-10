@@ -1,2 +1,3 @@
-1 1 * * * {{ docker_user_name }} docker start certbot renew
-2 1 * * * {{ docker_user_name }} docker exec nginx -s reload
+1 */12 * * * {{ docker_user_name }} docker start mage-certbot
+2 */24 * * * root rsync -Lar --delete {{ project_dir }}/letsencrypt/conf/live/scific/ {{ project_dir }}/letsencrypt/conf/live/mage/
+3 */24 * * * {{ docker_user_name }} docker exec mage-nginx nginx -s reload
