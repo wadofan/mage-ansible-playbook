@@ -31,7 +31,6 @@ $ ansible-galaxy collection install community.general community.docker
 як в різних системах його назва може відрізнятись
 (за замовчуванням "`sshd`")
 
-
 Роль `docker`, поки що, заточена під ОС Debian 12, 
 у зв'язку з цим, змінні дозволяють визначити параметри, 
 специфічні для цієї операційної системи.
@@ -42,7 +41,6 @@ $ ansible-galaxy collection install community.general community.docker
 | `cpu_arch`       | Архітектура процесора (наприклад, "`amd64`") |
 | `docker_keyfile` | Шлях до файлу, що містить GPG ключ Docker для пакетного менеджера Apt |
 | `gpg_pkg`        | Назва пакету GnuPG (за замовчуванням "`gpg`")|
-
 
 Для ролі `scific` використовуються наступні змінні:
 
@@ -62,8 +60,8 @@ $ ansible-galaxy collection install community.general community.docker
 | `cron_pkg`          | Назва пакету cron (за замовчуванням "`cron`") |
 | `cron_service`      | Назва системного сервіса cron (за замовчуванням "`crond`") |
 
-Крім цього, для генерації SSL всередині Docker-проекту 
-використовуються додаткові дві змінні:
+Крім цього, для генерації SSL сертифікатів всередині 
+Docker-проекту використовуються додаткові дві змінні:
 - `letsencrypt_email`: email, на який буде зареєстрований сертифікат;
 - `letsencrypt_domain`: доменне ім'я, на яке буде виданий сертифікат.
 
@@ -82,4 +80,3 @@ $ ansible-galaxy collection install community.general community.docker
 в директоріях за структурою `roles/<назва_ролі>/vars/main.yml`);
 
 - безпосередньо під час виконання команди (за допомогою аргументів командного рядка).
-
