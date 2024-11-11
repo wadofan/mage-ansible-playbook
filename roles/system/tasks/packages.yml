@@ -1,10 +1,16 @@
 - name: update all packages with apt
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.apt:
     name: "*"
     update_cache: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: update all packages with dnf
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   ansible.builtin.dnf:
     name: "*"
     update_cache: true
@@ -18,5 +24,5 @@
     name:
       - "{{ gpg_pkg | default('gnupg') }}"
       - "{{ cron_pkg | default('cron') }}"
+      - "{{ sudo_pkg | default('sudo') }}"
     state: present
-  notify: Enable cron service

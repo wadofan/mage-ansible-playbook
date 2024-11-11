@@ -1,29 +1,54 @@
-- name: Deny incoming traffic by default
+- name: install firewall package
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.package:
+    name:
+      - "{{ ufw_pkg | default('ufw') }}"
+    state: present
+  notify: Enable firewall
+
+- name: deny incoming traffic by default
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   community.general.ufw:
   default: deny
   direction: incoming
   protocol: any
 
-- name: Deny outgoing traffic by default
-  community.general.ufw:
-  default: deny
-  direction: outgoing
-  protocol: any
+# - name: deny outgoing traffic by default
+#   become: true
+#   become_user: root
+#   become_method: ansible.builtin.sudo
+#   community.general.ufw:
+#   default: deny
+#   direction: outgoing
+#   protocol: any
 
-- name: Deny forwarded/routed traffic
+- name: deny forwarded/routed traffic
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   community.general.ufw:
     rule: deny
     direction: any
     route: true
 
-- name: Limit incoming traffic on port 22 (ssh)
+- name: limit incoming traffic on port 22 (ssh)
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   community.general.ufw:
     rule: limit
     port: '22'
     direction: in
     protocol: tcp
 
-- name: Allow incoming traffic on ports 80, 443 (http, https)
+- name: allow incoming traffic on ports 80, 443 (http, https)
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   community.general.ufw:
     rule: allow
     port: '{{ item }}'
@@ -32,5 +57,3 @@
   loop:
     - '80'
     - '443'
-  notify: Enable firewall
-

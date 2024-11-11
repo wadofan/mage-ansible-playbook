@@ -1,3 +1,1 @@
 gpg_pkg: gpg
-ssh_service: ssh
-cron_service: cron

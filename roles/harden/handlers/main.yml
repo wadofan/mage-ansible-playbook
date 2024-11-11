@@ -1,10 +1,24 @@
-- name: Reload nginx configuration
-  community.docker.docker_container_exec:
-    name: "{{ nginx_container_name }}"
-    command: nginx -s reload
+- name: Restart SSH service
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.service:
+    name: "{{ ssh_service | default('sshd') }}"
+    state: restarted
 
 - name: Enable firewall
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
   community.general.ufw:
     state: enabled
     logging: 'on'
 
+- name: Disable root login
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.user: 
+    name: root
+    password: '!'
+    shell: /usr/bin/nologin

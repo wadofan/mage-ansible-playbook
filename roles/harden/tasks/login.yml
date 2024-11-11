@@ -1,0 +1,10 @@
+- name: copy configuration file for SSH
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.copy:
+    src: ssh.conf
+    dest: /etc/ssh/sshd_config
+  notify: 
+    - Restart SSH service
+    - Disable root login

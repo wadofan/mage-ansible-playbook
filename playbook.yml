@@ -1,9 +1,16 @@
 ---
 
 - name: Set up new machines
+  tags: always, init
   hosts: all
   roles:
     - system
     - docker
+    - harden
+
+- name: Download and run project
+  tags: download, run, project
+  hosts: all
+  roles:
     - github
-    # - harden
+    # - scific
