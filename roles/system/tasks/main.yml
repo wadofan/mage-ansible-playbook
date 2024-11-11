@@ -1,7 +1,7 @@
 ---
 
-- name: Update system packages
-  ansible.builtin.include_tasks: update.yml
+- name: Manage packages
+  ansible.builtin.include_tasks: packages.yml
 
 - name: Manage users
   ansible.builtin.include_tasks: user.yml
@@ -11,4 +11,3 @@
 
 # - name: Set up fail2ban
 #   ansible.builtin.include_tasks: fail2ban.yml
-

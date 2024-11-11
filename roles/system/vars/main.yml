@@ -1,4 +1,3 @@
-#auto_user: "{{ create_user }}"
-#auto_pass: "{{ create_pass }}"
-#ssh_pub_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/ansible.pub') }}"
+gpg_pkg: gpg
 ssh_service: ssh
+cron_service: cron

@@ -1,27 +1,27 @@
-- name: Ensure sudo is installed
+- name: ensure sudo is installed
   ansible.builtin.package:
     name: sudo
     state: present
 
-# - name: Create user for Ansible
-#   ansible.builtin.user:
-#     name: "{{ auto_user }}"
-#     password: "{{ auto_pass | password_hash('sha512') }}"
-#     comment: Ansible User
-#     create_home: true
-#     groups: sudo
-#     append: true
-
-# - name: Add SSH key for user "{{ auto_user }}"
-#   ansible.posix.authorized_key:
-#     user: "{{ auto_user }}"
-#     key: "{{ ssh_pub_key }}"
-#     state: present
-
-- name: Allow users from sudo group to use sudo
+- name: allow users from sudo group to use sudo
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present
     regexp: "^%sudo"
     line: "%sudo ALL=(ALL) ALL"
     validate: "/usr/sbin/visudo -cf %s"
+
+- name: create user "{{ project_user_name }}"
+  ansible.builtin.user:
+    name: "{{ project_user_name }}"
+    password: "{{ project_user_pass | password_hash('sha512') }}"
+    shell: "{{ project_user_shell }}"
+    create_home: true
+    groups: sudo
+    append: true
+
+- name: add SSH key for "{{ project_user_name }}"
+  ansible.posix.authorized_key:
+    user: "{{ project_user_name }}"
+    key: "{{ project_user_key }}"
+    state: present

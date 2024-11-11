@@ -1,0 +1,20 @@
+- name: update all packages with apt
+  ansible.builtin.apt:
+    name: "*"
+    update_cache: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: update all packages with dnf
+  ansible.builtin.dnf:
+    name: "*"
+    update_cache: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: install essential packages
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.package:
+    - "{{ gpg_pkg | default('gnupg') }}"
+    - "{{ cron_pkg | default('cron') }}"
+  notify: Enable cron service

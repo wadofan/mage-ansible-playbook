@@ -1,4 +1,4 @@
-- name: Copy configuration file for SSH
+- name: copy configuration file for SSH
   ansible.builtin.copy:
     src: ssh.conf
     dest: /etc/ssh/sshd_config

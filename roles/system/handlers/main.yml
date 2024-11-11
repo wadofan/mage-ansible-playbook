@@ -1,6 +1,13 @@
 - name: Restart SSH service
   ansible.builtin.service:
     name: "{{ ssh_service | default('sshd') }}"
+    state: restarted
+
+- name: Enable cron service
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.service:
+    name: "{{ cron_service | default('crond') }}"
     state: started
     enabled: true
-
