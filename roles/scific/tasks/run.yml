@@ -1,0 +1,22 @@
+- name: run docker compose
+  become: true
+  become_user: "{{ project_user_name }}"
+  become_method: ansible.builtin.su
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_dir }}"
+    state: present
+  environment:
+    CERT_EMAIL: "{{ letsencrypt_email }}"
+    CERT_DOMAIN: "{{ letsencrypt_domain }}"
+
+- name: generate script from template
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.template:
+    src: renew.sh
+    dest: "/etc/cron.daily/renew-cert.sh"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Enable cron service

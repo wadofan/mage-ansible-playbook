@@ -1,7 +1,5 @@
-nginx_container_name: "mage-nginx"
-letsencrypt_email: "user@change.me"
-letsencrypt_domain: "domain.change.me"
-docker_user_name: "mage"
-project_dir: "/home/{{ docker_user_name }}/mage-docker"
-cert_dir_path: "{{ project_dir }}/letsencrypt/conf/live"
+cron_service: cron
 
+letsencrypt_email: "{{ lookup('env', 'MAGE_EMAIL') }}"
+letsencrypt_domain: "{{ lookup('env', 'MAGE_DOMAIN') }}"
+nginx_container_name: mage-nginx

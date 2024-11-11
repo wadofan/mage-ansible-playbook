@@ -1,0 +1,7 @@
+---
+
+- name: Start Docker project
+  ansible.builtin.include_tasks: run.yml
+
+- name: Renew certificates
+  ansible.builtin.include_tasks: cert.yml
