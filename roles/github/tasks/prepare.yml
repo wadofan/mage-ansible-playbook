@@ -1,0 +1,18 @@
+- name: make sure that needed packages are installed
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.package:
+    name:
+      - "{{ git_pkg | default('git') }}"
+      - "{{ ssh_pkg | default('openssh') }}"
+    state: present
+
+- name: add "{{ project_user_name }}" to docker group
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  ansible.builtin.user:
+    name: "{{ project_user_name }}"
+    groups: docker
+    append: true

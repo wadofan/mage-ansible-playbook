@@ -1,15 +1,15 @@
-- name: Copy SSH key to acces GitHub repositories
+- name: copy SSH key to acces GitHub repositories
   become: true
-  become_user: "{{ docker_user_name }}"
+  become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
   ansible.builtin.copy:
     src: "{{ local_keyfile }}"
     dest: "{{ remote_keyfile }}"
     mode: '0600'
 
-- name: Clone repository from GitHub
+- name: clone project repository
   become: true
-  become_user: "{{ docker_user_name }}"
+  become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
   ansible.builtin.git:
     key_file: "{{ remote_keyfile }}"
@@ -19,13 +19,12 @@
     version: main
     single_branch: true
 
-- name: Clone SCIFiC repository
+- name: clone website repository
   become: true
-  become_user: "{{ docker_user_name }}"
+  become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
   ansible.builtin.git:
-    repo: "{{ scific_repo }}"
+    repo: "{{ website_repo }}"
     dest: "{{ project_dir }}/webroot"
     version: main
     single_branch: true
-#  notify: Run Docker Compose

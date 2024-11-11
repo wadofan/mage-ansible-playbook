@@ -1,0 +1,9 @@
+---
+
+project_user_name: "mage"
+project_user_pass: "changeme"
+project_user_shell: "/usr/bin/bash"
+project_user_key: "{{ lookup('file', '~/.ssh/mage.pub') }}"
+project_dir: "/home/{{ project_user_name }}/project"
+
+ansible_become_pass: "{{ project_user_pass }}"

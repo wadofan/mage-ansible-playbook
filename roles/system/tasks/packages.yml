@@ -15,6 +15,8 @@
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.package:
-    - "{{ gpg_pkg | default('gnupg') }}"
-    - "{{ cron_pkg | default('cron') }}"
+    name:
+      - "{{ gpg_pkg | default('gnupg') }}"
+      - "{{ cron_pkg | default('cron') }}"
+    state: present
   notify: Enable cron service

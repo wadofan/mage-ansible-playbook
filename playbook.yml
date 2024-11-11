@@ -1,10 +1,9 @@
 ---
 
-- name: Set up new machines to run project
+- name: Set up new machines
   hosts: all
   roles:
     - system
     - docker
-    - scific
-    - harden
-
+    - github
+    # - harden
