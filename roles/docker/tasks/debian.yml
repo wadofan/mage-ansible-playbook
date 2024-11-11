@@ -1,4 +1,4 @@
-- name: Remove old versions
+- name: remove old versions
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
@@ -12,28 +12,29 @@
       - runc
     state: absent
 
-- name: Download official GPG key
+- name: download official GPG key
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.apt_key:
     url: https://download.docker.com/linux/debian/gpg
-    keyring: "{{ docker_keyfile }}"
+    keyring: "{{ apt_docker_keyfile }}"
     state: present
 
-- name: Add apt repository
+- name: add apt repository
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.apt_repository:
     repo: >
-      deb [arch={{ cpu_arch }} signed-by={{ docker_keyfile }}]
+      deb [arch={{ cpu_arch }}
+      signed-by={{ apt_docker_keyfile }}]
       https://download.docker.com/linux/debian
       {{ debian_release }} stable
     filename: docker
     state: present
 
-- name: Install Docker packages
+- name: install Docker packages
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
