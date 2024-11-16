@@ -1,8 +1,8 @@
-- name: copy configuration file for SSH
+- name: generate  SSH configuration file from template
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: ssh.conf
     dest: /etc/ssh/sshd_config
   notify: 

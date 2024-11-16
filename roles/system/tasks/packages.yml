@@ -26,3 +26,4 @@
       - "{{ cron_pkg | default('cron') }}"
       - "{{ sudo_pkg | default('sudo') }}"
     state: present
+  notify: Enable cron service

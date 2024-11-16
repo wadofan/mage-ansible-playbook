@@ -13,27 +13,26 @@
   become_user: root
   become_method: ansible.builtin.sudo
   community.general.ufw:
-  default: deny
-  direction: incoming
-  protocol: any
+    default: deny
+    direction: incoming
+    protocol: any
 
 # - name: deny outgoing traffic by default
 #   become: true
 #   become_user: root
 #   become_method: ansible.builtin.sudo
 #   community.general.ufw:
-#   default: deny
-#   direction: outgoing
-#   protocol: any
+#     default: deny
+#     direction: outgoing
+#     protocol: any
 
-- name: deny forwarded/routed traffic
-  become: true
-  become_user: root
-  become_method: ansible.builtin.sudo
-  community.general.ufw:
-    rule: deny
-    direction: any
-    route: true
+# - name: deny forwarded/routed traffic
+#   become: true
+#   become_user: root
+#   become_method: ansible.builtin.sudo
+#   community.general.ufw:
+#     rule: deny
+#     routed: true
 
 - name: limit incoming traffic on port 22 (ssh)
   become: true

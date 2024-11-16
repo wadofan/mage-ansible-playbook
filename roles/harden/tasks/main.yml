@@ -1,8 +1,7 @@
 ---
 
-- name: Manage user login
-  ansible.builtin.include_tasks: login.yml
+- name: Configure SSH
+  ansible.builtin.include_tasks: ssh.yml
 
 - name: Set up firewall
   ansible.builtin.include_tasks: firewall.yml
-
