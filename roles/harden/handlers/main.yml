@@ -21,4 +21,4 @@
   ansible.builtin.user: 
     name: root
     password: '!'
-    shell: /usr/bin/nologin
+    shell: /usr/sbin/nologin

@@ -1,0 +1,9 @@
+---
+
+- name: Set up new machines
+  hosts: all
+  roles:
+    - system
+    - docker
+    - harden
+

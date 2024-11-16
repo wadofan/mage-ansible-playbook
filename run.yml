@@ -1,0 +1,7 @@
+---
+
+- name: Download and run project
+  hosts: project
+  roles:
+    - scific
+

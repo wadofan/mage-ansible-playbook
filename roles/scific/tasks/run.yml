@@ -7,8 +7,8 @@
     state: present
     profiles: gen
   environment:
-    CERT_EMAIL: "{{ letsencrypt_email }}"
-    CERT_DOMAIN: "{{ letsencrypt_domain }}"
+    EMAIL: "{{ letsencrypt_email }}"
+    DOMAIN: "{{ letsencrypt_domain }}"
   notify: Run docker compose
 
 - name: generate script to reload nginx from template

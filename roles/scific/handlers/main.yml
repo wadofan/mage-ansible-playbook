@@ -15,4 +15,4 @@
     state: present
     profiles: run
   environment:
-    DOMAIN: "{{ letsencrypt_domain }}"
+    CERT_DOMAIN: "{{ letsencrypt_domain }}"
