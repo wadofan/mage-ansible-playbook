@@ -8,15 +8,6 @@
       - "{{ ssh_pkg | default('openssh') }}"
     state: present
 
-- name: add "{{ project_user_name }}" to docker group
-  become: true
-  become_user: root
-  become_method: ansible.builtin.sudo
-  ansible.builtin.user:
-    name: "{{ project_user_name }}"
-    groups: docker
-    append: true
-
 - name: copy SSH key to acces GitHub repositories
   become: true
   become_user: "{{ project_user_name }}"
