@@ -16,3 +16,12 @@
     name: "{{ project_user_name }}"
     groups: docker
     append: true
+
+- name: copy SSH key to acces GitHub repositories
+  become: true
+  become_user: "{{ project_user_name }}"
+  become_method: ansible.builtin.su
+  ansible.builtin.copy:
+    src: "{{ local_keyfile }}"
+    dest: "{{ remote_keyfile }}"
+    mode: '0600'

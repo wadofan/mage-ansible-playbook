@@ -1,22 +1,23 @@
-- name: run docker compose
+- name: generate certificates with certbot container
   become: true
   become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
   community.docker.docker_compose_v2:
     project_src: "{{ project_dir }}"
     state: present
+    profiles: gen
   environment:
     CERT_EMAIL: "{{ letsencrypt_email }}"
     CERT_DOMAIN: "{{ letsencrypt_domain }}"
+  notify: Run docker compose
 
-- name: generate script from template
+- name: generate script to reload nginx from template
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.template:
-    src: renew.sh
-    dest: "/etc/cron.daily/renew-cert.sh"
+    src: reload.sh
+    dest: "/etc/cron.daily/reload-nginx.sh"
     owner: root
     group: root
-    mode: '0644'
-  notify: Enable cron service
+    mode: '0755'

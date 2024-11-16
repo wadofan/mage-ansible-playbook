@@ -1,7 +1,10 @@
 ---
 
-- name: Start Docker project
-  ansible.builtin.include_tasks: run.yml
+- name: Prepare system to download and run project
+  ansible.builtin.include_tasks: prepare.yml
 
-- name: Renew certificates
-  ansible.builtin.include_tasks: cert.yml
+- name: Clone repositories from GitHub
+  ansible.builtin.include_tasks: clone.yml
+
+- name: Run Docker project
+  ansible.builtin.include_tasks: run.yml

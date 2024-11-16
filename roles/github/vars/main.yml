@@ -1,8 +1,0 @@
-git_pkg: git-core
-ssh_pkg: openssh-client
-
-local_keyfile: "~/.ssh/github"
-remote_keyfile: "/home/{{ project_user_name }}/.ssh/github"
-
-project_repo: "git@github.com:wadofan/mage-docker.git"
-website_repo: "https://github.com/scific-conference/scific.git"

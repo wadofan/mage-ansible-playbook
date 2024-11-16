@@ -1,16 +1,18 @@
-- name: Enable cron service
-  become: true
-  become_user: root
-  become_method: ansible.builtin.sudo
-  ansible.builtin.service:
-    name: "{{ cron_service | default('crond') }}"
-    state: started
-    enabled: true
+# - name: Reload nginx configuration
+#   become: true
+#   become_user: "{{ project_user_name }}"
+#   become_method: ansible.builtin.su
+#   community.docker.docker_container_exec:
+#     name: "{{ nginx_container_name }}"
+#     command: nginx -s reload
 
-- name: Reload nginx configuration
+- name: Run docker compose
   become: true
   become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
-  community.docker.docker_container_exec:
-    name: "{{ nginx_container_name }}"
-    command: nginx -s reload
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_dir }}"
+    state: present
+    profiles: run
+  environment:
+    DOMAIN: "{{ letsencrypt_domain }}"

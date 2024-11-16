@@ -1,5 +1,11 @@
-cron_service: cron
+git_pkg: git-core
+ssh_pkg: openssh-client
+
+local_keyfile: "~/.ssh/github"
+remote_keyfile: "/home/{{ project_user_name }}/.ssh/github"
+
+project_repo: "git@github.com:wadofan/mage-docker.git"
+website_repo: "https://github.com/scific-conference/scific.git"
 
 letsencrypt_email: "{{ lookup('env', 'MAGE_EMAIL') }}"
 letsencrypt_domain: "{{ lookup('env', 'MAGE_DOMAIN') }}"
-nginx_container_name: mage-nginx
