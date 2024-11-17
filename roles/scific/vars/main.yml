@@ -7,5 +7,3 @@ remote_keyfile: "/home/{{ project_user_name }}/.ssh/github"
 project_repo: "git@github.com:wadofan/mage-docker.git"
 website_repo: "https://github.com/scific-conference/scific.git"
 
-letsencrypt_email: "{{ lookup('env', 'MAGE_EMAIL') }}"
-letsencrypt_domain: "{{ lookup('env', 'MAGE_DOMAIN') }}"
