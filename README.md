@@ -115,13 +115,8 @@ $ ansible-playbook ./init.yml ./run.yml
 
 Також варто згадати, що деякі змінні задаються за допомогою змінних середовища. 
 Можна задати ці змінні у вашому середовищі, хоча це не обов'язково і за бажанням 
-можна змінити їх напряму у файлах.
-
-Наприклад, у файлі `group_vars/all/vars.yml`
-змінна `project_user_pass` задається за
-допомогою змінної середовища `MAGE_PASS`.
-
-У файлі `roles/scific/vars/main.yml`:
-- `MAGE_EMAIL` задає змінну `letsencrypt_email`
-- `MAGE_DOMAIN` задає змінну `letsencrypt_domain`
+можна змінити їх напряму у файлах. Наприклад, у файлі `group_vars/all/vars.yml`:
+- `MAGE_PASS` задає змінну `project_user_pass`,
+- `MAGE_EMAIL` задає змінну `letsencrypt_email`,
+- `MAGE_DOMAIN` задає змінну `letsencrypt_domain`.
 
