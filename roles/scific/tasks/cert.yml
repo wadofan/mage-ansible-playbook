@@ -1,9 +1,0 @@
-- name: make nginx use new certificates
-  become: true
-  become_user: "{{ project_user_name }}"
-  become_method: ansible.builtin.su
-  ansible.builtin.replace:
-    path: "{{ project_dir }}/nginx/templates/reverse-proxy.conf.template"
-    regexp: 'live/mage'
-    replace: 'live/{{ letsencrypt_domain }}'
-  notify: Reload nginx configuration
