@@ -1,4 +1,4 @@
-- name: generate certificates with certbot container
+- name: run docker compose to generate certificates
   become: true
   become_user: "{{ project_user_name }}"
   become_method: ansible.builtin.su
@@ -11,7 +11,7 @@
     DOMAIN: "{{ letsencrypt_domain }}"
   notify: Run docker compose
 
-- name: generate script to reload nginx from template
+- name: generate script from template to reload nginx 
   become: true
   become_user: root
   become_method: ansible.builtin.sudo

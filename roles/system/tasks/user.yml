@@ -7,6 +7,7 @@
     password: "{{ project_user_pass | password_hash('sha512') }}"
     shell: "{{ project_user_shell }}"
     create_home: true
+    update_password: on_create
     groups: sudo
     append: true
   notify: Allow to use sudo

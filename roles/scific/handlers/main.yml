@@ -1,11 +1,3 @@
-# - name: Reload nginx configuration
-#   become: true
-#   become_user: "{{ project_user_name }}"
-#   become_method: ansible.builtin.su
-#   community.docker.docker_container_exec:
-#     name: "{{ nginx_container_name }}"
-#     command: nginx -s reload
-
 - name: Run docker compose
   become: true
   become_user: "{{ project_user_name }}"
