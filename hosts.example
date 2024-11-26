@@ -1,0 +1,7 @@
+[project]
+a.b.c.d ansible_ssh_user=<user1> 
+w.x.y.z ansible_ssh_user=<user2> 
+
+[project:vars]
+ansible_ssh_private_key_file = ~/.ssh/keyfile
+ansible_become_password = <sudo-password>

@@ -9,7 +9,25 @@
   environment:
     EMAIL: "{{ letsencrypt_email }}"
     DOMAIN: "{{ letsencrypt_domain }}"
-  notify: Run docker compose
+  ignore_errors: true
+
+- name: wait until container stops
+  ansible.builtin.wait_for:
+    timeout: 10
+#    port: 80
+#    state: stopped
+
+- name: run docker compose to start project
+  become: true
+  become_user: "{{ project_user_name }}"
+  become_method: ansible.builtin.su
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_dir }}"
+    state: present
+    profiles: run
+    recreate: always
+  environment:
+    CERT_DOMAIN: "{{ letsencrypt_domain }}"
 
 - name: generate script from template to reload nginx 
   become: true
@@ -21,3 +39,4 @@
     owner: root
     group: root
     mode: '0755'
+
