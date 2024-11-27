@@ -4,6 +4,7 @@
   become_method: ansible.builtin.sudo
   ansible.builtin.apt:
     name: "*"
+    state: latest
     update_cache: true
   when: ansible_facts['os_family'] == "Debian"
 
@@ -13,6 +14,7 @@
   become_method: ansible.builtin.sudo
   ansible.builtin.dnf:
     name: "*"
+    state: latest
     update_cache: true
   when: ansible_facts['os_family'] == "RedHat"
 
