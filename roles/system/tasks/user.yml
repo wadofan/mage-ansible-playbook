@@ -1,22 +1,22 @@
-- name: create user "{{ project_user_name }}"
+- name: create user "{{ mage_user_name }}"
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.user:
-    name: "{{ project_user_name }}"
-    password: "{{ project_user_pass | password_hash('sha512') }}"
-    shell: "{{ project_user_shell }}"
+    name: "{{ mage_user_name }}"
+    password: "{{ mage_user_pass | password_hash('sha512') }}"
+    shell: "{{ mage_user_shell }}"
     create_home: true
     update_password: on_create
     groups: sudo
     append: true
   notify: Allow to use sudo
 
-- name: add SSH key for user "{{ project_user_name }}"
+- name: add SSH key for user "{{ mage_user_name }}"
   become: true
-  become_user: "{{ project_user_name }}"
+  become_user: "{{ mage_user_name }}"
   become_method: ansible.builtin.su
   ansible.posix.authorized_key:
-    user: "{{ project_user_name }}"
-    key: "{{ project_user_key }}"
+    user: "{{ mage_user_name }}"
+    key: "{{ mage_user_key }}"
     state: present

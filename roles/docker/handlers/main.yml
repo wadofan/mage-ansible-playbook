@@ -12,6 +12,6 @@
   become_user: root
   become_method: ansible.builtin.sudo
   ansible.builtin.user:
-    name: "{{ project_user_name }}"
+    name: "{{ mage_user_name }}"
     groups: docker
     append: true

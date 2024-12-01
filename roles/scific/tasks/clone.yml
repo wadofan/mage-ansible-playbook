@@ -1,19 +1,8 @@
-- name: copy SSH key to acces private GitHub repositories
-  become: true
-  become_user: "{{ project_user_name }}"
-  become_method: ansible.builtin.su
-  ansible.builtin.copy:
-    src: "{{ github_ssh_keyfile }}"
-    dest: "/home/{{ project_user_name }}/.ssh/github"
-    mode: '0600'
-  when: github_ssh_keyfile is defined
-
 - name: clone project repository
   become: true
-  become_user: "{{ project_user_name }}"
+  become_user: "{{ mage_user_name }}"
   become_method: ansible.builtin.su
   ansible.builtin.git:
-    key_file: "/home/{{ project_user_name }}/.ssh/github"
     accept_hostkey: true
     repo: "{{ project_repo }}"
     dest: "{{ project_dir }}"
@@ -23,13 +12,13 @@
 
 - name: clone website repository
   become: true
-  become_user: "{{ project_user_name }}"
+  become_user: "{{ mage_user_name }}"
   become_method: ansible.builtin.su
   ansible.builtin.git:
+    accept_hostkey: true
     repo: "{{ website_repo }}"
     dest: "{{ project_dir }}/webroot"
     update: yes
     force: yes
     version: main
     single_branch: true
-

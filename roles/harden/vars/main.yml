@@ -1,2 +1,2 @@
+ssh_allow_users: "{{ mage_user_name }}"
 ssh_service: ssh
-ssh_allow_users: "{{ project_user_name }}"

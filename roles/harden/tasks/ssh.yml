@@ -1,4 +1,4 @@
-- name: generate  SSH configuration file from template
+- name: generate SSH configuration file from template
   become: true
   become_user: root
   become_method: ansible.builtin.sudo

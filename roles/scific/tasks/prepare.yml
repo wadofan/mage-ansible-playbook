@@ -7,4 +7,3 @@
       - "{{ git_pkg | default('git') }}"
       - "{{ ssh_pkg | default('openssh') }}"
     state: present
-

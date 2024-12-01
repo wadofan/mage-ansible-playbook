@@ -1,2 +1,2 @@
-gpg_pkg: gpg
 cron_service: cron
+gpg_pkg: gpg

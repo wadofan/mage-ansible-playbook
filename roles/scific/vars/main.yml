@@ -1,8 +1,5 @@
 git_pkg: git-core
 ssh_pkg: openssh-client
 
-github_ssh_keyfile: "~/.ssh/github"
-
-project_repo: "git@github.com:wadofan/mage-docker.git"
+project_repo: "https://github.com/wadofan/mage-docker.git"
 website_repo: "https://github.com/scific-conference/scific.git"
-
